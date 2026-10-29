@@ -136,7 +136,7 @@ function Nueva() {
               <label className="text-sm font-semibold">Fecha</label>
               <Input className="h-12 rounded-2xl" type="date" value={date} max={today()} onChange={(e) => setDate(e.target.value)} />
             </div>
-            <Textarea className="rounded-2xl" placeholder="Nota corta: ¿cómo viene?" maxLength={280} value={body} onChange={(e) => setBody(e.target.value)} />
+            <Textarea className="rounded-2xl" placeholder="Nota corta: ¿cómo viene?" maxLength={500} value={body} onChange={(e) => setBody(e.target.value)} />
           </>
         ) : (
           <>
