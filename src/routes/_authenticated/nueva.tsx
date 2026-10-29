@@ -37,7 +37,7 @@ function Nueva() {
 
   function pick(f?: File) {
     if (!f) return;
-    if (!f.type.startsWith("image/")) return toast.error("Solo fotos, sin video.");
+    if (!f.type.startsWith("image/")) return void toast.error("Solo fotos, sin video.");
     setFile(f);
     setPreview(URL.createObjectURL(f));
   }
@@ -45,10 +45,10 @@ function Nueva() {
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     if (!me) return;
-    if (!file) return toast.error("Elegí una foto.");
-    if (!body.trim()) return toast.error(type === "consulta" ? "Escribí tu pregunta." : "Escribí una nota.");
-    if (type === "consulta" && !plant.trim()) return toast.error("Poné el nombre de la planta.");
-    if (type === "entrada" && gardenId === "new" && !newName.trim()) return toast.error("Ponele nombre a tu huerta o planta.");
+    if (!file) return void toast.error("Elegí una foto.");
+    if (!body.trim()) return void toast.error(type === "consulta" ? "Escribí tu pregunta." : "Escribí una nota.");
+    if (type === "consulta" && !plant.trim()) return void toast.error("Poné el nombre de la planta.");
+    if (type === "entrada" && gardenId === "new" && !newName.trim()) return void toast.error("Ponele nombre a tu huerta o planta.");
     setSaving(true);
     try {
       let gid: string | null = null;

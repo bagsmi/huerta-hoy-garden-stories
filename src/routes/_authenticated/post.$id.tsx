@@ -45,7 +45,7 @@ function PostDetail() {
     e.preventDefault();
     if (!me || !text.trim()) return;
     const { error } = await supabase.from("comments").insert({ post_id: id, user_id: me.id, body: text.trim().slice(0, 500) });
-    if (error) return toast.error("No se pudo comentar.");
+    if (error) return void toast.error("No se pudo comentar.");
     setText("");
     qc.invalidateQueries({ queryKey: ["comments", id] });
     qc.invalidateQueries({ queryKey: ["posts"] });

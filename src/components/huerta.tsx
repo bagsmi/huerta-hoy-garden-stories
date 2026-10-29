@@ -11,7 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 
-export function Photo({ path, alt, className }: { path?: string | null; alt: string; className?: string }) {
+export function Photo({ path, alt, className }: { path?: string | null | undefined; alt: string; className?: string }) {
   const url = usePhotoUrl(path);
   return url ? (
     <img src={url} alt={alt} loading="lazy" className={`object-cover ${className ?? ""}`} />
@@ -20,7 +20,7 @@ export function Photo({ path, alt, className }: { path?: string | null; alt: str
   );
 }
 
-export function Avatar({ path, name, size = 36 }: { path?: string | null; name: string; size?: number }) {
+export function Avatar({ path, name, size = 36 }: { path?: string | null | undefined; name: string; size?: number }) {
   const url = usePhotoUrl(path);
   return (
     <div
@@ -51,7 +51,7 @@ export function PostMenu({ post }: { post: FeedPost }) {
   async function block() {
     if (!confirm(`¿Bloquear a @${post.profiles?.username}? No vas a ver más sus publicaciones.`)) return;
     const { error } = await supabase.from("blocks").insert({ blocker_id: me!.id, blocked_id: post.user_id });
-    if (error && error.code !== "23505") return toast.error("No se pudo bloquear.");
+    if (error && error.code !== "23505") { toast.error("No se pudo bloquear."); return; }
     toast.success("Usuario bloqueado.");
     qc.invalidateQueries();
     navigate({ to: "/feed" });
@@ -63,7 +63,7 @@ export function PostMenu({ post }: { post: FeedPost }) {
       .insert({ post_id: post.id, reporter_id: me!.id, reason: reason.trim() || "Sin motivo" });
     setReportOpen(false);
     setReason("");
-    if (error && error.code !== "23505") return toast.error("No se pudo enviar el reporte.");
+    if (error && error.code !== "23505") { toast.error("No se pudo enviar el reporte."); return; }
     toast.success("Gracias, recibimos tu reporte.");
   }
 

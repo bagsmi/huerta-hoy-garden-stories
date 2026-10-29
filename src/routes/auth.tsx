@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { passwordError, usernameError } from "@/lib/validation";
 
 export const Route = createFileRoute("/auth")({
-  validateSearch: (s: Record<string, unknown>) => ({ mode: s.mode === "signup" ? "signup" : "login" }) as { mode: "login" | "signup" },
+  validateSearch: (s: Record<string, unknown>) => ({ mode: s["mode"] === "signup" ? "signup" : "login" }) as { mode: "login" | "signup" },
   head: () => ({
     meta: [
       { title: "Entrar — Huerta Hoy" },
@@ -38,22 +38,22 @@ function AuthPage() {
     try {
       if (signup) {
         const uErr = usernameError(username);
-        if (uErr) return toast.error(uErr);
+        if (uErr) return void toast.error(uErr);
         const pErr = passwordError(password);
-        if (pErr) return toast.error(pErr);
+        if (pErr) return void toast.error(pErr);
         const { data: free } = await supabase.rpc("username_available", { _username: username });
-        if (!free) return toast.error("Ese nombre de usuario ya está en uso.");
+        if (!free) return void toast.error("Ese nombre de usuario ya está en uso.");
         const { data, error } = await supabase.auth.signUp({
           email,
           password,
           options: { emailRedirectTo: window.location.origin + "/feed", data: { username } },
         });
-        if (error) return toast.error(error.message);
+        if (error) return void toast.error(error.message);
         if (data.session) navigate({ to: "/feed" });
         else setSent(true);
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) return toast.error("Email o contraseña incorrectos.");
+        if (error) return void toast.error("Email o contraseña incorrectos.");
         navigate({ to: "/feed" });
       }
     } finally {

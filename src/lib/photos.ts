@@ -10,7 +10,7 @@ export async function uploadPhoto(file: File, userId: string): Promise<string> {
   return path;
 }
 
-export function usePhotoUrl(path?: string | null) {
+export function usePhotoUrl(path?: string | null | undefined) {
   return useQuery({
     queryKey: ["photo", path],
     enabled: !!path,
