@@ -44,7 +44,7 @@ function PostDetail() {
   async function send(e: React.FormEvent) {
     e.preventDefault();
     if (!me || !text.trim()) return;
-    const { error } = await supabase.from("comments").insert({ post_id: id, user_id: me.id, body: text.trim().slice(0, 500) });
+    const { error } = await supabase.from("comments").insert({ post_id: id, user_id: me.id, body: text.trim().slice(0, 300) });
     if (error) return void toast.error("No se pudo comentar.");
     setText("");
     qc.invalidateQueries({ queryKey: ["comments", id] });
@@ -106,7 +106,7 @@ function PostDetail() {
           </div>
         ))}
         <form onSubmit={send} className="flex gap-2">
-          <Input className="h-12 rounded-full" placeholder="Escribí un comentario…" maxLength={500} value={text} onChange={(e) => setText(e.target.value)} />
+          <Input className="h-12 rounded-full" placeholder="Escribí un comentario…" maxLength={300} value={text} onChange={(e) => setText(e.target.value)} />
           <button type="submit" aria-label="Enviar" className="rounded-full bg-primary px-4 text-primary-foreground">
             <Send className="h-5 w-5" />
           </button>
