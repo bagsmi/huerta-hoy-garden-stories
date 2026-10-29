@@ -1,0 +1,14 @@
+{
+  "name": "Huerta Hoy",
+  "short_name": "Huerta Hoy",
+  "description": "Diario de huertas y plantas",
+  "start_url": "/feed",
+  "display": "standalone",
+  "background_color": "#f5f0e4",
+  "theme_color": "#1f4a2e",
+  "lang": "es-AR",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
