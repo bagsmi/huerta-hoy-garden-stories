@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
 import { Plus } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { useGardens } from "@/lib/gardens";
 import { AppShell } from "@/components/huerta";
 import { GardenGrid } from "@/components/garden-grid";
 import { useMe } from "@/lib/session";
@@ -10,22 +9,6 @@ export const Route = createFileRoute("/_authenticated/diario")({
   head: () => ({ meta: [{ title: "Mi diario — Huerta Hoy" }, { name: "description", content: "Tus huertas y plantas." }] }),
   component: Diario,
 });
-
-export function useGardens(userId?: string) {
-  return useQuery({
-    queryKey: ["gardens", userId],
-    enabled: !!userId,
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("gardens")
-        .select("id, name, kind, posts(image_path, taken_on)")
-        .eq("user_id", userId!)
-        .order("created_at", { ascending: false });
-      if (error) throw error;
-      return data;
-    },
-  });
-}
 
 function Diario() {
   const me = useMe();

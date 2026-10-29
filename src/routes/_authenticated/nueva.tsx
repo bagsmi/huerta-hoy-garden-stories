@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { uploadPhoto } from "@/lib/photos";
 import { useMe } from "@/lib/session";
-import { useGardens } from "./diario";
+import { useGardens } from "@/lib/gardens";
 
 export const Route = createFileRoute("/_authenticated/nueva")({
   head: () => ({ meta: [{ title: "Publicar — Huerta Hoy" }, { name: "description", content: "Nueva entrada de diario o consulta." }] }),

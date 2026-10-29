@@ -7,7 +7,7 @@ import { AppShell, Avatar } from "@/components/huerta";
 import { GardenGrid } from "@/components/garden-grid";
 import { uploadPhoto } from "@/lib/photos";
 import { useMe } from "@/lib/session";
-import { useGardens } from "./diario";
+import { useGardens } from "@/lib/gardens";
 
 export const Route = createFileRoute("/_authenticated/perfil")({
   head: () => ({ meta: [{ title: "Mi perfil — Huerta Hoy" }, { name: "description", content: "Tu foto, usuario y diarios." }] }),
