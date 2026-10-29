@@ -10,33 +10,131 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedDiarioRouteImport } from './routes/_authenticated/diario'
+import { Route as AuthenticatedFeedRouteImport } from './routes/_authenticated/feed'
+import { Route as AuthenticatedNuevaRouteImport } from './routes/_authenticated/nueva'
+import { Route as AuthenticatedPerfilRouteImport } from './routes/_authenticated/perfil'
+import { Route as AuthenticatedDiarioGardenIdRouteImport } from './routes/_authenticated/diario.$gardenId'
+import { Route as AuthenticatedPostIdRouteImport } from './routes/_authenticated/post.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedDiarioRoute = AuthenticatedDiarioRouteImport.update({
+  id: '/diario',
+  path: '/diario',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedFeedRoute = AuthenticatedFeedRouteImport.update({
+  id: '/feed',
+  path: '/feed',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedNuevaRoute = AuthenticatedNuevaRouteImport.update({
+  id: '/nueva',
+  path: '/nueva',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedPerfilRoute = AuthenticatedPerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDiarioGardenIdRoute =
+  AuthenticatedDiarioGardenIdRouteImport.update({
+    id: '/$gardenId',
+    path: '/$gardenId',
+    getParentRoute: () => AuthenticatedDiarioRoute,
+  } as any)
+const AuthenticatedPostIdRoute = AuthenticatedPostIdRouteImport.update({
+  id: '/post/$id',
+  path: '/post/$id',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/diario': typeof AuthenticatedDiarioRouteWithChildren
+  '/feed': typeof AuthenticatedFeedRoute
+  '/nueva': typeof AuthenticatedNuevaRoute
+  '/perfil': typeof AuthenticatedPerfilRoute
+  '/diario/$gardenId': typeof AuthenticatedDiarioGardenIdRoute
+  '/post/$id': typeof AuthenticatedPostIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/diario': typeof AuthenticatedDiarioRouteWithChildren
+  '/feed': typeof AuthenticatedFeedRoute
+  '/nueva': typeof AuthenticatedNuevaRoute
+  '/perfil': typeof AuthenticatedPerfilRoute
+  '/diario/$gardenId': typeof AuthenticatedDiarioGardenIdRoute
+  '/post/$id': typeof AuthenticatedPostIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/_authenticated/diario': typeof AuthenticatedDiarioRouteWithChildren
+  '/_authenticated/feed': typeof AuthenticatedFeedRoute
+  '/_authenticated/nueva': typeof AuthenticatedNuevaRoute
+  '/_authenticated/perfil': typeof AuthenticatedPerfilRoute
+  '/_authenticated/diario/$gardenId': typeof AuthenticatedDiarioGardenIdRoute
+  '/_authenticated/post/$id': typeof AuthenticatedPostIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/diario'
+    | '/feed'
+    | '/nueva'
+    | '/perfil'
+    | '/diario/$gardenId'
+    | '/post/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/diario'
+    | '/feed'
+    | '/nueva'
+    | '/perfil'
+    | '/diario/$gardenId'
+    | '/post/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/_authenticated/diario'
+    | '/_authenticated/feed'
+    | '/_authenticated/nueva'
+    | '/_authenticated/perfil'
+    | '/_authenticated/diario/$gardenId'
+    | '/_authenticated/post/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +146,99 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/diario': {
+      id: '/_authenticated/diario'
+      path: '/diario'
+      fullPath: '/diario'
+      preLoaderRoute: typeof AuthenticatedDiarioRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/feed': {
+      id: '/_authenticated/feed'
+      path: '/feed'
+      fullPath: '/feed'
+      preLoaderRoute: typeof AuthenticatedFeedRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/nueva': {
+      id: '/_authenticated/nueva'
+      path: '/nueva'
+      fullPath: '/nueva'
+      preLoaderRoute: typeof AuthenticatedNuevaRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/perfil': {
+      id: '/_authenticated/perfil'
+      path: '/perfil'
+      fullPath: '/perfil'
+      preLoaderRoute: typeof AuthenticatedPerfilRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/diario/$gardenId': {
+      id: '/_authenticated/diario/$gardenId'
+      path: '/$gardenId'
+      fullPath: '/diario/$gardenId'
+      preLoaderRoute: typeof AuthenticatedDiarioGardenIdRouteImport
+      parentRoute: typeof AuthenticatedDiarioRoute
+    }
+    '/_authenticated/post/$id': {
+      id: '/_authenticated/post/$id'
+      path: '/post/$id'
+      fullPath: '/post/$id'
+      preLoaderRoute: typeof AuthenticatedPostIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedDiarioRouteChildren {
+  AuthenticatedDiarioGardenIdRoute: typeof AuthenticatedDiarioGardenIdRoute
+}
+
+const AuthenticatedDiarioRouteChildren: AuthenticatedDiarioRouteChildren = {
+  AuthenticatedDiarioGardenIdRoute: AuthenticatedDiarioGardenIdRoute,
+}
+
+const AuthenticatedDiarioRouteWithChildren =
+  AuthenticatedDiarioRoute._addFileChildren(AuthenticatedDiarioRouteChildren)
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedDiarioRoute: typeof AuthenticatedDiarioRouteWithChildren
+  AuthenticatedFeedRoute: typeof AuthenticatedFeedRoute
+  AuthenticatedNuevaRoute: typeof AuthenticatedNuevaRoute
+  AuthenticatedPerfilRoute: typeof AuthenticatedPerfilRoute
+  AuthenticatedPostIdRoute: typeof AuthenticatedPostIdRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedDiarioRoute: AuthenticatedDiarioRouteWithChildren,
+  AuthenticatedFeedRoute: AuthenticatedFeedRoute,
+  AuthenticatedNuevaRoute: AuthenticatedNuevaRoute,
+  AuthenticatedPerfilRoute: AuthenticatedPerfilRoute,
+  AuthenticatedPostIdRoute: AuthenticatedPostIdRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
