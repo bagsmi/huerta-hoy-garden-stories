@@ -48,7 +48,7 @@ function AuthPage() {
           password,
           options: { emailRedirectTo: window.location.origin + "/feed", data: { username } },
         });
-        if (error) return void toast.error(error.message);
+        if (error) return void toast.error(/weak|pwned|guess/i.test(error.message) ? "Esa contraseña es muy común. Elegí otra más segura." : /registered/i.test(error.message) ? "Ese email ya tiene una cuenta." : "No pudimos crear la cuenta. Probá de nuevo.");
         if (data.session) navigate({ to: "/feed" });
         else setSent(true);
       } else {
