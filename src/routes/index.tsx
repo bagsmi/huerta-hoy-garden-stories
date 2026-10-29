@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Sprout } from "lucide-react";
-import hero from "@/assets/hero.jpg";
+import heroAsset from "@/assets/huerta-real.jpg.asset.json";
+const hero = heroAsset.url;
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -19,7 +20,7 @@ export const Route = createFileRoute("/")({
 function Landing() {
   return (
     <div className="relative mx-auto flex min-h-screen max-w-lg flex-col justify-end overflow-hidden bg-forest">
-      <img src={hero} alt="Canasta con cosecha de la huerta" width={864} height={1280} className="absolute inset-0 h-full w-full object-cover" />
+      <img src={hero} alt="Huerta con canteros de verduras al sol" width={1080} height={1620} className="absolute inset-0 h-full w-full object-cover" />
       <div className="absolute inset-0 photo-fade" />
       <div className="relative space-y-5 p-7 pb-12 text-cream">
         <p className="flex items-center gap-2 text-sm font-semibold uppercase tracking-widest">
